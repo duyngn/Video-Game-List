@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Video Game List</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="title_activity_list_games">ListGamesActivity</string>
+    <string name="title_activity_rate_games">RateGamesActivity</string>
+    <string name="list_game_btn_txt">List Game</string>
+    <string name="rate_game_btn_txt">Rate Game</string>
+    <string name="title_txt">My Game Collections</string>
+
+</resources>

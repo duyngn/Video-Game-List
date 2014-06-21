@@ -1,0 +1,49 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <TextView
+            android:text="@string/title_txt"
+            android:id="@+id/textView"
+
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="25sp"/>
+
+        <Button
+            android:id="@+id/list_games_btn"
+            android:text="@string/list_game_btn_txt"
+            android:onClick="mainBtnAction"
+
+            android:layout_width="300dip"
+            android:layout_height="70dip"
+            android:textSize="30sp"
+            android:gravity="center"
+            android:layout_marginBottom="25sp"/>
+
+        <Button
+            android:id="@+id/rate_games_btn"
+            android:text="@string/rate_game_btn_txt"
+            android:onClick="mainBtnAction"
+
+            android:layout_width="300dip"
+            android:layout_height="70dip"
+            android:textSize="30sp"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
