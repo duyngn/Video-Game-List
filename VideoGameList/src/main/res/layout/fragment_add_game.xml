@@ -69,4 +69,13 @@
         android:layout_alignEnd="@+id/editText"
         android:layout_toRightOf="@+id/textView2"
         android:spinnerMode="dropdown" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Game"
+        android:id="@+id/add_game_btn"
+        android:onClick="submitForm"
+        android:layout_below="@+id/spinner"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

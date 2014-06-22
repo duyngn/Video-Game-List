@@ -1,6 +1,7 @@
 package com.duyngn.videogamelist;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -8,13 +9,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.FileNotFoundException;
+import java.util.Random;
 
 public class ListGamesActivity extends ActionBarActivity implements GameListFragment.OnFragmentInteractionListener, AddGameFragment.OnFragmentInteractionListener {
 
@@ -22,6 +22,8 @@ public class ListGamesActivity extends ActionBarActivity implements GameListFrag
 
     private GameListFragment gameFrag;
     private AddGameFragment addFrag;
+
+    private GamesDataSource datasource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,33 +36,12 @@ public class ListGamesActivity extends ActionBarActivity implements GameListFrag
         getSupportFragmentManager().beginTransaction().add(R.id.list_games_view, gameFrag).commit();
     }
 
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        return true;
-//    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-////        int id = item.getItemId();
-////        if (id == R.id.action_add) {
-////
-////            this.showForm();
-////            return true;
-////        }
-//        return super.onOptionsItemSelected(item);
-//    }
-
     private void setupActionbar()
     {
         ActionBar mActionBar = getSupportActionBar();
         mActionBar.setDisplayShowTitleEnabled(false);
         mActionBar.setDisplayUseLogoEnabled(false);
         mActionBar.setDisplayHomeAsUpEnabled(false);
-        //mActionBar.setDisplayShowCustomEnabled(true);
         mActionBar.setDisplayShowHomeEnabled(false);
         LayoutInflater mInflater = LayoutInflater.from(this);
 
@@ -85,19 +66,50 @@ public class ListGamesActivity extends ActionBarActivity implements GameListFrag
         startActivity(myIntent);
     }
     public void addBtn(View v){
-        this.showForm();
+        if(addFrag == null) {
+            this.showForm();
+        }
     }
 
     private void showForm(){
         if(gameFrag != null) {
             getSupportFragmentManager().beginTransaction().remove(gameFrag).commit();
+            gameFrag = null;
         }
         addFrag = AddGameFragment.newInstance();
         getSupportFragmentManager().beginTransaction().add(R.id.list_games_view, addFrag).commit();
     }
 
-    private void submitForm(){
+    public void submitForm(View view){
+        //@SuppressWarnings("unchecked")
+        //ArrayAdapter<GameObject> adapter = (ArrayAdapter<GameObject>) getListAdapter();
 
+        //GameObject newGame = null;
+
+        Resources res = getResources();
+        String[] gameTitles = res.getStringArray(R.array.game_titles);
+        String[] gameConsoles = res.getStringArray(R.array.game_consoles);
+
+        //String[] comments = new String[] { "Cool", "Very nice", "Hate it" };
+
+        // @todo update with real data from form.
+        int nextGame = new Random().nextInt(15);
+        int nextConsole = new Random().nextInt(10);
+        int nextRating = new Random().nextInt(5);
+
+        datasource = new GamesDataSource(this);
+        datasource.open();
+
+        // save the new comment to the database
+        datasource.createGame(gameTitles[nextGame], gameConsoles[nextConsole], 0, nextRating, R.drawable.ic_launcher);
+        //adapter.add(newGame);
+
+        if(addFrag != null) {
+            getSupportFragmentManager().beginTransaction().remove(addFrag).commit();
+            addFrag = null;
+        }
+        gameFrag = GameListFragment.newInstance("check");
+        getSupportFragmentManager().beginTransaction().add(R.id.list_games_view, gameFrag).commit();
     }
 
     public void startPhotoIntent(View v){

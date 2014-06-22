@@ -7,6 +7,8 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
+import java.util.List;
+
 /**
  * A fragment representing a list of Items.
  * <p />
@@ -18,11 +20,8 @@ public class GameListFragment extends ListFragment {
 
     private static final String LAYOUT_STYLE = "check";
 
-    // TODO: Remove dummy data
+    private GamesDataSource datasource;
     private String list_layout;
-    String[] gameTitles;
-    String[] gameConsoles;
-    int image = R.drawable.ic_launcher;
 
     private OnFragmentInteractionListener mListener;
 
@@ -50,11 +49,18 @@ public class GameListFragment extends ListFragment {
             list_layout = getArguments().getString(LAYOUT_STYLE);
         }
 
-        Resources res = getResources();
-        gameTitles = res.getStringArray(R.array.game_titles);
-        gameConsoles = res.getStringArray(R.array.game_consoles);
+//        Resources res = getResources();
+//        gameTitles = res.getStringArray(R.array.game_titles);
+//        gameConsoles = res.getStringArray(R.array.game_consoles);
 
-        setListAdapter(new GameListAdapter(getActivity(),gameTitles,gameConsoles,image, list_layout));
+        datasource = new GamesDataSource(getActivity());
+        datasource.open();
+
+        List<GameObject> values = datasource.getAllGames();
+
+        GameObject[] allGamesArr = new GameObject[values.size()];
+        values.toArray(allGamesArr); // fill the array
+        setListAdapter(new GameListAdapter(getActivity(), allGamesArr, list_layout));
     }
 
 

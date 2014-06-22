@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-class GameListAdapter extends ArrayAdapter<String>
+import java.util.List;
+
+class GameListAdapter extends ArrayAdapter<GameObject>
 {
     Context context;
     int image;
@@ -18,13 +20,13 @@ class GameListAdapter extends ArrayAdapter<String>
     String[] consoleArray;
     String layoutStyle;
 
-    GameListAdapter(Context c, String[] titles, String[] consoles, int img, String style)
+    GameObject[] allGames;
+
+    GameListAdapter(Context c, GameObject[] gamesArr, String style)
     {
-        super(c, R.layout.list_game_row, R.id.textView, titles);
+        super(c, R.layout.list_game_row, R.id.textView, gamesArr);
         this.context = c;
-        this.image = img;
-        this.titleArray = titles;
-        this.consoleArray = consoles;
+        this.allGames = gamesArr;
         this.layoutStyle = style;
     }
 
@@ -72,15 +74,17 @@ class GameListAdapter extends ArrayAdapter<String>
             holder = (MyViewHolder) row.getTag();
         }
 
-        holder.myGameIcon.setImageResource(image);
-        holder.myGameTitle.setText(titleArray[position]);
-        holder.myGameConsole.setText(consoleArray[(int)(Math.random() * 10)]);
+        holder.myGameIcon.setImageResource(allGames[position].getImage());
+        holder.myGameTitle.setText(allGames[position].getTitle());
+        holder.myGameConsole.setText(allGames[position].getConsole());
 
         if(layoutStyle.equals("check")) {
-            holder.myGameCompleted.setChecked(true);
+            boolean flag = false;
+            if(allGames[position].getCompleted() == 1){ flag = true; }
+            holder.myGameCompleted.setChecked(flag);
         }
         else{
-            holder.myGameRating.setRating(3);
+            holder.myGameRating.setRating(allGames[position].getRating());
         }
 
         return row;

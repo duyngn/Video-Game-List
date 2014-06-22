@@ -1,0 +1,86 @@
+package com.duyngn.videogamelist;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
+
+public class GamesDataSource {
+
+    // Database fields
+    private SQLiteDatabase database;
+    private MySQLiteHelper dbHelper;
+    private String[] allColumns = { MySQLiteHelper.COLUMN_ID,
+            MySQLiteHelper.COLUMN_TITLE, MySQLiteHelper.COLUMN_CONSOLE,
+            MySQLiteHelper.COLUMN_COMPLETED, MySQLiteHelper.COLUMN_RATING, MySQLiteHelper.COLUMN_IMAGE};
+
+    public GamesDataSource(Context context) {
+        dbHelper = new MySQLiteHelper(context);
+    }
+
+    public void open() throws SQLException {
+        database = dbHelper.getWritableDatabase();
+    }
+
+    public void close() {
+        dbHelper.close();
+    }
+
+    public GameObject createGame(String title, String console, int completed, int rating, int image) {
+        ContentValues values = new ContentValues();
+
+        values.put(MySQLiteHelper.COLUMN_TITLE, title);
+        values.put(MySQLiteHelper.COLUMN_CONSOLE, console);
+        values.put(MySQLiteHelper.COLUMN_COMPLETED, completed);
+        values.put(MySQLiteHelper.COLUMN_RATING, rating);
+        values.put(MySQLiteHelper.COLUMN_IMAGE, image);
+
+        long insertId = database.insert(MySQLiteHelper.TABLE_GAMES, null, values);
+        Cursor cursor = database.query(MySQLiteHelper.TABLE_GAMES,
+                allColumns, MySQLiteHelper.COLUMN_ID + " = " + insertId, null,
+                null, null, null);
+        cursor.moveToFirst();
+        GameObject newGame = cursorToGame(cursor);
+        cursor.close();
+        return newGame;
+    }
+
+    public void deleteGame(GameObject game) {
+        int id = game.getId();
+        //System.out.println("Comment deleted with id: " + id);
+        database.delete(MySQLiteHelper.TABLE_GAMES, MySQLiteHelper.COLUMN_ID
+                + " = " + id, null);
+    }
+
+    public List<GameObject> getAllGames() {
+        List<GameObject> comments = new ArrayList<GameObject>();
+
+        Cursor cursor = database.query(MySQLiteHelper.TABLE_GAMES,
+                allColumns, null, null, null, null, null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            GameObject comment = cursorToGame(cursor);
+            comments.add(comment);
+            cursor.moveToNext();
+        }
+        // make sure to close the cursor
+        cursor.close();
+        return comments;
+    }
+
+    private GameObject cursorToGame(Cursor cursor) {
+        GameObject game = new GameObject();
+        game.setId(cursor.getInt(0));
+        game.setTitle(cursor.getString(1));
+        game.setConsole(cursor.getString(2));
+        game.setCompleted(cursor.getInt(3));
+        game.setRating(cursor.getInt(4));
+        game.setImage(cursor.getInt(5));
+        return game;
+    }
+}
