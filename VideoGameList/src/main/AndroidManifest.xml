@@ -18,11 +18,13 @@
         </activity>
         <activity
             android:name="com.duyngn.videogamelist.ListGamesActivity"
-            android:label="@string/title_activity_list_games" >
+            android:label="@string/title_activity_list_games"
+            android:parentActivityName="com.duyngn.videogamelist.MainActivity" >
         </activity>
         <activity
             android:name="com.duyngn.videogamelist.RateGamesActivity"
-            android:label="@string/title_activity_rate_games" >
+            android:label="@string/title_activity_rate_games"
+            android:parentActivityName="com.duyngn.videogamelist.MainActivity" >
         </activity>
     </application>
 

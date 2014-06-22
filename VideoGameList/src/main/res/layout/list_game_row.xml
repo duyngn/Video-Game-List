@@ -1,0 +1,66 @@
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:src="@drawable/ic_launcher"
+        android:layout_width="80dip"
+        android:layout_height="80dip"
+        android:layout_margin="10dip"
+        android:id="@+id/imageView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/textView"
+        android:layout_alignTop="@+id/imageView"
+        android:layout_toRightOf="@+id/imageView"
+        android:gravity="center_vertical"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textSize="25sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/textView2"
+        android:layout_alignBottom="@+id/checkBox"
+        android:layout_toRightOf="@+id/imageView" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Completed"
+        android:id="@+id/checkBox"
+        android:layout_marginRight="10dip"
+        android:gravity="center"
+        android:layout_alignEnd="@+id/textView"
+        android:checked="false"
+        android:layout_alignRight="@+id/textView"
+        android:layout_alignBottom="@+id/imageView" />
+
+    <RatingBar android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:numStars="5"
+        android:stepSize="1"
+        android:isIndicator="true"
+        android:layout_gravity="center_vertical"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        android:layout_alignBottom="@+id/imageView"
+        android:layout_alignRight="@+id/textView"
+        android:layout_alignEnd="@+id/textView"
+        android:layout_below="@+id/textView"
+        android:visibility="gone" />
+
+</RelativeLayout>
