@@ -26,7 +26,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + COLUMN_CONSOLE + " TEXT NOT NULL, "
             + COLUMN_COMPLETED + " INTEGER DEFAULT 0, "
             + COLUMN_RATING + " INTEGER DEFAULT 0, "
-            + COLUMN_IMAGE + " INTEGER DEFAULT 0"
+            + COLUMN_IMAGE + " BLOB"
             + ");";
 
     public MySQLiteHelper(Context context) {

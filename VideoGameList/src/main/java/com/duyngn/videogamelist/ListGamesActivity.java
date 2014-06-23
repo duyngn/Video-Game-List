@@ -1,7 +1,6 @@
 package com.duyngn.videogamelist;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -10,11 +9,12 @@ import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.FileNotFoundException;
-import java.util.Random;
 
 public class ListGamesActivity extends ActionBarActivity implements GameListFragment.OnFragmentInteractionListener, AddGameFragment.OnFragmentInteractionListener {
 
@@ -24,6 +24,8 @@ public class ListGamesActivity extends ActionBarActivity implements GameListFrag
     private AddGameFragment addFrag;
 
     private GamesDataSource datasource;
+
+    private Bitmap resizedImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +64,7 @@ public class ListGamesActivity extends ActionBarActivity implements GameListFrag
     }
 
     public void backBtn(View v){
-        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+        Intent myIntent = new Intent(getParent(), MainActivity.class);
         startActivity(myIntent);
     }
     public void addBtn(View v){
@@ -81,42 +83,44 @@ public class ListGamesActivity extends ActionBarActivity implements GameListFrag
     }
 
     public void submitForm(View view){
-        //@SuppressWarnings("unchecked")
-        //ArrayAdapter<GameObject> adapter = (ArrayAdapter<GameObject>) getListAdapter();
 
-        //GameObject newGame = null;
+        String gTitle = ((EditText)addFrag.getView().findViewById(R.id.game_title)).getText().toString();
+        String gConsole = ((Spinner)addFrag.getView().findViewById(R.id.console_spinner)).getSelectedItem().toString();
 
-        Resources res = getResources();
-        String[] gameTitles = res.getStringArray(R.array.game_titles);
-        String[] gameConsoles = res.getStringArray(R.array.game_consoles);
+        if(gTitle != null
+                && gConsole != null
+                && !gTitle.equals("")
+                && !gConsole.equals("")) {
 
-        //String[] comments = new String[] { "Cool", "Very nice", "Hate it" };
+            if(resizedImage == null){
+                resizedImage = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
+            }
 
-        // @todo update with real data from form.
-        int nextGame = new Random().nextInt(15);
-        int nextConsole = new Random().nextInt(10);
-        int nextRating = new Random().nextInt(5);
+            datasource = new GamesDataSource(this);
+            datasource.open();
 
-        datasource = new GamesDataSource(this);
-        datasource.open();
+            datasource.createGame(gTitle, gConsole, 0, 0, resizedImage);
 
-        // save the new comment to the database
-        datasource.createGame(gameTitles[nextGame], gameConsoles[nextConsole], 0, nextRating, R.drawable.ic_launcher);
-        //adapter.add(newGame);
-
-        if(addFrag != null) {
-            getSupportFragmentManager().beginTransaction().remove(addFrag).commit();
-            addFrag = null;
+            if (addFrag != null) {
+                getSupportFragmentManager().beginTransaction().remove(addFrag).commit();
+                addFrag = null;
+            }
+            gameFrag = GameListFragment.newInstance("check");
+            getSupportFragmentManager().beginTransaction().add(R.id.list_games_view, gameFrag).commit();
         }
-        gameFrag = GameListFragment.newInstance("check");
-        getSupportFragmentManager().beginTransaction().add(R.id.list_games_view, gameFrag).commit();
+        else{
+            Toast.makeText(this, "Title and Console is required",Toast.LENGTH_LONG).show();
+        }
     }
 
     public void startPhotoIntent(View v){
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
-        startActivityForResult(photoPickerIntent, SELECT_PHOTO);
+
+        photoPickerIntent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(photoPickerIntent, "Select Picture"), SELECT_PHOTO);
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
@@ -127,20 +131,17 @@ public class ListGamesActivity extends ActionBarActivity implements GameListFrag
                 if(resultCode == RESULT_OK){
                     Uri selectedImage = imageReturnedIntent.getData();
                     try {
-                        Bitmap yourSelectedImage = this.decodeUri(selectedImage);
+                        resizedImage = this.decodeUri(selectedImage);
+
+                        addFrag.updateImageView(resizedImage);
+
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
-//                    InputStream imageStream = null;
-//                    try {
-//                        imageStream = getActivity().getContentResolver().openInputStream(selectedImage);
-//                    } catch (FileNotFoundException e) {
-//                        e.printStackTrace();
-//                    }
-//                    Bitmap yourSelectedImage = BitmapFactory.decodeStream(imageStream);
                 }
         }
     }
+
 
     private Bitmap decodeUri(Uri selectedImage) throws FileNotFoundException {
 
@@ -150,7 +151,7 @@ public class ListGamesActivity extends ActionBarActivity implements GameListFrag
         BitmapFactory.decodeStream(getContentResolver().openInputStream(selectedImage), null, o);
 
         // The new size we want to scale to
-        final int REQUIRED_SIZE = 140;
+        final int REQUIRED_SIZE = 100;
 
         // Find the correct scale value. It should be the power of 2.
         int width_tmp = o.outWidth, height_tmp = o.outHeight;

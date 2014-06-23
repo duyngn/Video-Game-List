@@ -2,48 +2,85 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="fill_parent"
+    android:background="@drawable/bkg_repeat"
     android:gravity="center"
     android:orientation="vertical">
+    <TextView
+        android:text="@string/title_txt"
+        android:id="@+id/textView"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_above="@+id/linearLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="25dp"
+        android:textColor="#ff0d0f"
+        android:textColorHighlight="#181aff"
+        android:shadowColor="#000000"
+
+        android:shadowDx="-5"
+        android:shadowDy="5"
+        android:shadowRadius="1"/>
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="center">
+        android:gravity="center"
+        android:id="@+id/linearLayout"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
-        <TextView
-            android:text="@string/title_txt"
-            android:id="@+id/textView"
 
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginBottom="25sp"/>
 
-        <Button
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/list_games_btn"
-            android:text="@string/list_game_btn_txt"
             android:onClick="mainBtnAction"
+            android:src="@drawable/list_icon"
+            android:layout_marginRight="15dp" />
 
-            android:layout_width="300dip"
-            android:layout_height="70dip"
-            android:textSize="30sp"
-            android:gravity="center"
-            android:layout_marginBottom="25sp"/>
-
-        <Button
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/rate_games_btn"
-            android:text="@string/rate_game_btn_txt"
             android:onClick="mainBtnAction"
-
-            android:layout_width="300dip"
-            android:layout_height="70dip"
-            android:textSize="30sp"
-            android:gravity="center"/>
+            android:src="@drawable/rate_icon"
+            android:layout_marginLeft="15dp" />
 
     </LinearLayout>
+
+
+
+    <!--<Button-->
+        <!--android:id="@+id/rate_games_btn"-->
+        <!--android:text="@string/rate_game_btn_txt"-->
+        <!--android:onClick="mainBtnAction"-->
+
+        <!--android:layout_width="300dip"-->
+        <!--android:layout_height="70dip"-->
+        <!--android:textSize="30sp"-->
+        <!--android:gravity="center"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_centerHorizontal="true" />-->
+
+    <!--<Button-->
+        <!--android:id="@+id/list_games_btn"-->
+        <!--android:text="@string/list_game_btn_txt"-->
+        <!--android:onClick="mainBtnAction"-->
+
+        <!--android:layout_width="300dip"-->
+        <!--android:layout_height="70dip"-->
+        <!--android:textSize="30sp"-->
+        <!--android:gravity="center"-->
+        <!--android:layout_above="@+id/rate_games_btn"-->
+        <!--android:layout_alignLeft="@+id/rate_games_btn"-->
+        <!--android:layout_alignStart="@+id/rate_games_btn" />-->
 
 </RelativeLayout>

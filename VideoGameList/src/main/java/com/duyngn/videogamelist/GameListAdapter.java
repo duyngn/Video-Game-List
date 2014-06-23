@@ -10,14 +10,9 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import java.util.List;
-
 class GameListAdapter extends ArrayAdapter<GameObject>
 {
     Context context;
-    int image;
-    String[] titleArray;
-    String[] consoleArray;
     String layoutStyle;
 
     GameObject[] allGames;
@@ -74,7 +69,7 @@ class GameListAdapter extends ArrayAdapter<GameObject>
             holder = (MyViewHolder) row.getTag();
         }
 
-        holder.myGameIcon.setImageResource(allGames[position].getImage());
+        holder.myGameIcon.setImageBitmap(allGames[position].getImage());
         holder.myGameTitle.setText(allGames[position].getTitle());
         holder.myGameConsole.setText(allGames[position].getConsole());
 

@@ -1,5 +1,6 @@
 package com.duyngn.videogamelist;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 
 public class GamesDataSource {
 
@@ -30,14 +34,19 @@ public class GamesDataSource {
         dbHelper.close();
     }
 
-    public GameObject createGame(String title, String console, int completed, int rating, int image) {
+    public GameObject createGame(String title, String console, int completed, int rating, Bitmap image) {
         ContentValues values = new ContentValues();
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String encodedImageString = Base64.encodeToString(b, Base64.DEFAULT);
 
         values.put(MySQLiteHelper.COLUMN_TITLE, title);
         values.put(MySQLiteHelper.COLUMN_CONSOLE, console);
         values.put(MySQLiteHelper.COLUMN_COMPLETED, completed);
         values.put(MySQLiteHelper.COLUMN_RATING, rating);
-        values.put(MySQLiteHelper.COLUMN_IMAGE, image);
+        values.put(MySQLiteHelper.COLUMN_IMAGE, encodedImageString);
 
         long insertId = database.insert(MySQLiteHelper.TABLE_GAMES, null, values);
         Cursor cursor = database.query(MySQLiteHelper.TABLE_GAMES,
@@ -80,7 +89,11 @@ public class GamesDataSource {
         game.setConsole(cursor.getString(2));
         game.setCompleted(cursor.getInt(3));
         game.setRating(cursor.getInt(4));
-        game.setImage(cursor.getInt(5));
+
+        byte[] bytarray = Base64.decode(cursor.getBlob(5), Base64.DEFAULT);
+        Bitmap bmimage = BitmapFactory.decodeByteArray(bytarray, 0, bytarray.length);
+        game.setImage(bmimage);
+
         return game;
     }
 }

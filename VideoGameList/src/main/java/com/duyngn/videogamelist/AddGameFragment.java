@@ -13,6 +13,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.Spinner;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -67,13 +70,26 @@ public class AddGameFragment extends Fragment {
 //            mParam1 = getArguments().getString(ARG_PARAM1);
 //            mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_game, container, false);
+        View v = inflater.inflate(R.layout.fragment_add_game, container, false);
+
+        this.setSpinnerContent(v);
+
+        return v;
+    }
+
+    private void setSpinnerContent( View view )
+    {
+        Spinner spinner = (Spinner) view.findViewById(R.id.console_spinner);
+        ArrayAdapter<CharSequence> consoleAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.game_consoles, android.R.layout.simple_spinner_item);
+        consoleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(consoleAdapter);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -86,6 +102,7 @@ public class AddGameFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+
         try {
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
@@ -100,7 +117,10 @@ public class AddGameFragment extends Fragment {
         mListener = null;
     }
 
-
+    public void updateImageView(Bitmap image) {
+        ImageView imageV = (ImageView) getView().findViewById(R.id.game_image);
+        imageV.setImageBitmap(image);
+    }
 
 
     /**

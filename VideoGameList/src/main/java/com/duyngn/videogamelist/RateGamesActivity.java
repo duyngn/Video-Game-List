@@ -44,7 +44,7 @@ public class RateGamesActivity extends ActionBarActivity implements GameListFrag
     }
 
     public void backBtn(View v){
-        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+        Intent myIntent = new Intent(getParent(), MainActivity.class);
         startActivity(myIntent);
     }
     public void addBtn(View v){

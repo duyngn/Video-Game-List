@@ -1,9 +1,11 @@
 package com.duyngn.videogamelist;
 
+import android.graphics.Bitmap;
+
 public class GameObject {
 
     private int id;
-    private int image;
+    private Bitmap image;
     private String title;
     private String console;
     private int completed;
@@ -33,11 +35,11 @@ public class GameObject {
         this.console = console;
     }
 
-    public int getImage() {
+    public Bitmap getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(Bitmap image) {
         this.image = image;
     }
 
