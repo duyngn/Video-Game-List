@@ -3,8 +3,6 @@ package com.duyngn.videogamelist;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.view.View;
-import android.widget.ListView;
 
 import java.util.List;
 
@@ -48,10 +46,6 @@ public class GameListFragment extends ListFragment{
             list_layout = getArguments().getString(LAYOUT_STYLE);
         }
 
-//        Resources res = getResources();
-//        gameTitles = res.getStringArray(R.array.game_titles);
-//        gameConsoles = res.getStringArray(R.array.game_consoles);
-
         datasource = new GamesDataSource(getActivity());
         datasource.open();
 
@@ -83,17 +77,18 @@ public class GameListFragment extends ListFragment{
     }
 
 
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
-//        if (null != mListener) {
-//
-//            //Toast.makeText(getActivity(), position, Toast.LENGTH_SHORT).show();
-//            // Notify the active callbacks interface (the activity, if the
-//            // fragment is attached to one) that an item has been selected.
-//            //mListener.onFragmentInteraction(getResources().getResourceEntryName(v.getId()));
-//        }
-    }
+//    @Override
+//    public void onListItemClick(ListView l, View v, int position, long id) {
+//        super.onListItemClick(l, v, position, id);
+////        if (null != mListener) {
+////
+////            //Toast.makeText(getActivity(), position, Toast.LENGTH_SHORT).show();
+////            // Notify the active callbacks interface (the activity, if the
+////            // fragment is attached to one) that an item has been selected.
+////            //mListener.onFragmentInteraction(getResources().getResourceEntryName(v.getId()));
+////        }
+//    }
+
 
     /**
     * This interface must be implemented by activities that contain this

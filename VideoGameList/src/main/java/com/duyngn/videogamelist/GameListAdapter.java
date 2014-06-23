@@ -27,6 +27,7 @@ class GameListAdapter extends ArrayAdapter<GameObject>
     }
 
     static class MyViewHolder {
+        TextView myGameId;
         TextView myGameTitle;
         TextView myGameConsole;
         ImageView myGameIcon;
@@ -34,6 +35,7 @@ class GameListAdapter extends ArrayAdapter<GameObject>
         RatingBar myGameRating;
 
         MyViewHolder(View v, String style){
+            myGameId = (TextView) v.findViewById(R.id.game_id);
             myGameIcon = (ImageView) v.findViewById(R.id.imageView);
             myGameTitle = (TextView) v.findViewById(R.id.textView);
             myGameConsole = (TextView) v.findViewById(R.id.textView2);
@@ -111,6 +113,7 @@ class GameListAdapter extends ArrayAdapter<GameObject>
             holder = (MyViewHolder) row.getTag();
         }
 
+        holder.myGameId.setText(allGames[position].getId()+"");
         holder.myGameIcon.setImageBitmap(allGames[position].getImage());
         holder.myGameTitle.setText(allGames[position].getTitle());
         holder.myGameConsole.setText(allGames[position].getConsole());
