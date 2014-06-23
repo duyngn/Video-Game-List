@@ -1,8 +1,13 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bkg_repeat_grey"
+    >
 <RelativeLayout
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@drawable/bkg_repeat_grey">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ImageView
         android:layout_width="80dp"
@@ -70,3 +75,4 @@
         android:layout_below="@+id/game_title"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>
+</ScrollView>

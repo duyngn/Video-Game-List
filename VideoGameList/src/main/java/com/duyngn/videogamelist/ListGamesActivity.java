@@ -34,8 +34,11 @@ public class ListGamesActivity extends ActionBarActivity implements GameListFrag
 
         this.setupActionbar();
 
-        gameFrag = GameListFragment.newInstance("check");
-        getSupportFragmentManager().beginTransaction().add(R.id.list_games_view, gameFrag).commit();
+        if(savedInstanceState == null)
+        {
+            gameFrag = GameListFragment.newInstance("check");
+            getSupportFragmentManager().beginTransaction().add(R.id.list_games_view, gameFrag).commit();
+        }
     }
 
     private void setupActionbar()
