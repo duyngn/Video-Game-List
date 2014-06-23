@@ -89,15 +89,19 @@ class GameListAdapter extends ArrayAdapter<GameObject>
             }
             else {
                 holder.myGameRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+
+                    @Override
                     public void onRatingChanged(RatingBar ratingBar,
                                                 float rating, boolean fromTouch) {
-                        GameObject game = (GameObject) holder.myGameRating.getTag();
-                        game.setRating(Math.round(rating));
+                        if(fromTouch) {
+                            GameObject game = (GameObject) holder.myGameRating.getTag();
+                            game.setRating(Math.round(rating));
 
-                        GamesDataSource datasource = new GamesDataSource(getContext());
-                        datasource.open();
-                        datasource.updateGame(game);
-                        datasource.close();
+                            GamesDataSource datasource = new GamesDataSource(getContext());
+                            datasource.open();
+                            datasource.updateGame(game);
+                            datasource.close();
+                        }
                     }
                 });
             }
