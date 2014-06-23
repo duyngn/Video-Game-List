@@ -65,6 +65,15 @@ public class GamesDataSource {
                 + " = " + id, null);
     }
 
+    public void updateGame(GameObject game){
+        ContentValues values = new ContentValues();
+
+        values.put(MySQLiteHelper.COLUMN_COMPLETED, game.getCompleted());
+        values.put(MySQLiteHelper.COLUMN_RATING, game.getRating());
+
+        database.update(MySQLiteHelper.TABLE_GAMES, values, "_id ="+game.getId(), null);
+    }
+
     public List<GameObject> getAllGames() {
         List<GameObject> comments = new ArrayList<GameObject>();
 

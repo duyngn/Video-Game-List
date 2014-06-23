@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -15,7 +16,7 @@ class GameListAdapter extends ArrayAdapter<GameObject>
     Context context;
     String layoutStyle;
 
-    GameObject[] allGames;
+    private GameObject[] allGames;
 
     GameListAdapter(Context c, GameObject[] gamesArr, String style)
     {
@@ -54,7 +55,7 @@ class GameListAdapter extends ArrayAdapter<GameObject>
     public View getView(int position, View convertView, ViewGroup parent){
 
         View row = convertView;
-        MyViewHolder holder = null;
+        final MyViewHolder holder;
 
         if(row == null)
         {
@@ -63,6 +64,43 @@ class GameListAdapter extends ArrayAdapter<GameObject>
 
             holder = new MyViewHolder(row, layoutStyle);
             row.setTag(holder);
+
+            if(layoutStyle.equals("check")){
+                holder.myGameCompleted.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView,
+                                                 boolean isChecked) {
+                        GameObject game = (GameObject) holder.myGameCompleted.getTag();
+                        if(buttonView.isChecked()) {
+                            game.setCompleted(1);
+                        }
+                        else{
+                            game.setCompleted(0);
+                        }
+
+                        GamesDataSource datasource = new GamesDataSource(getContext());
+                        datasource.open();
+                        datasource.updateGame(game);
+                        datasource.close();
+                    }
+                });
+
+            }
+            else {
+                holder.myGameRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                    public void onRatingChanged(RatingBar ratingBar,
+                                                float rating, boolean fromTouch) {
+                        GameObject game = (GameObject) holder.myGameRating.getTag();
+                        game.setRating(Math.round(rating));
+
+                        GamesDataSource datasource = new GamesDataSource(getContext());
+                        datasource.open();
+                        datasource.updateGame(game);
+                        datasource.close();
+                    }
+                });
+            }
         }
         else
         {
@@ -76,9 +114,12 @@ class GameListAdapter extends ArrayAdapter<GameObject>
         if(layoutStyle.equals("check")) {
             boolean flag = false;
             if(allGames[position].getCompleted() == 1){ flag = true; }
+
+            holder.myGameCompleted.setTag(allGames[position]);
             holder.myGameCompleted.setChecked(flag);
         }
         else{
+            holder.myGameRating.setTag(allGames[position]);
             holder.myGameRating.setRating(allGames[position].getRating());
         }
 

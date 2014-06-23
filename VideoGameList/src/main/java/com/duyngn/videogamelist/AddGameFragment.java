@@ -1,14 +1,8 @@
 package com.duyngn.videogamelist;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
-
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
@@ -31,16 +21,6 @@ import java.io.InputStream;
  *
  */
 public class AddGameFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-//    private static final String ARG_PARAM1 = "param1";
-//    private static final String ARG_PARAM2 = "param2";
-
-
-
-    // TODO: Rename and change types of parameters
-//    private String mParam1;
-//    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
@@ -53,10 +33,8 @@ public class AddGameFragment extends Fragment {
     // TODO: Rename and change types and number of parameters
     public static AddGameFragment newInstance() {
         AddGameFragment fragment = new AddGameFragment();
-        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+//        Bundle args = new Bundle();
+//        fragment.setArguments(args);
         return fragment;
     }
     public AddGameFragment() {
@@ -66,11 +44,8 @@ public class AddGameFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
+//        if (getArguments() != null) {
+//        }
     }
 
     @Override
@@ -137,25 +112,4 @@ public class AddGameFragment extends Fragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(String id);
     }
-
-
-
-    /** * Use for decoding camera response data. *
-     * @param data * @param context * @return */
-//    public static Bitmap getBitmapFromCameraData(Intent data, Context context)
-//    {
-//        Uri selectedImage = data.getData();
-//        String[] filePathColumn = {
-//                MediaStore.Images.Media.DATA
-//        };
-//
-//        Cursor cursor = context.getContentResolver().query(selectedImage,filePathColumn, null, null, null);
-//        cursor.moveToFirst();
-//        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-//        String picturePath = cursor.getString(columnIndex);
-//        cursor.close();
-//
-//        return BitmapFactory.decodeFile(picturePath);
-//    }
-
 }

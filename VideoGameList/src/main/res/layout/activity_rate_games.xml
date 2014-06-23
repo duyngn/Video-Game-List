@@ -7,7 +7,8 @@
     android:paddingRight="0dip"
     android:paddingTop="0dip"
     android:paddingBottom="0dip"
-    tools:context="com.duyngn.videogamelist.ListGamesActivity">
+    tools:context="com.duyngn.videogamelist.ListGamesActivity"
+    android:background="@drawable/bkg_repeat_grey">
 
 
 </RelativeLayout>

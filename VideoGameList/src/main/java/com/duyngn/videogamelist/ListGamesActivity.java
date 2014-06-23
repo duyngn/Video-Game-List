@@ -64,7 +64,9 @@ public class ListGamesActivity extends ActionBarActivity implements GameListFrag
     }
 
     public void backBtn(View v){
-        Intent myIntent = new Intent(getParent(), MainActivity.class);
+        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+        myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(myIntent);
     }
     public void addBtn(View v){
@@ -100,6 +102,8 @@ public class ListGamesActivity extends ActionBarActivity implements GameListFrag
             datasource.open();
 
             datasource.createGame(gTitle, gConsole, 0, 0, resizedImage);
+
+            datasource.close();
 
             if (addFrag != null) {
                 getSupportFragmentManager().beginTransaction().remove(addFrag).commit();
